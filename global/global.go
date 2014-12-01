@@ -1,3 +1,4 @@
+// Package global automatically sets http.DefaultTransport to loghttp.DefaultTransport when loaded.
 package global
 
 import (
@@ -6,5 +7,5 @@ import (
 )
 
 func init() {
-	http.DefaultClient.Transport = loghttp.DefaultTransport
+	http.DefaultTransport = loghttp.DefaultTransport
 }
