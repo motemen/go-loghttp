@@ -33,7 +33,7 @@ func main() {
 
 Or set `loghttp.Transport` to `http.Client`'s `Transport` field.
 
-```
+```go
 import "github.com/motemen/go-loghttp"
 
 client := &http.Client{
