@@ -31,6 +31,14 @@ func main() {
 }
 ```
 
+```
+% go run main.go http://example.com/
+2014/12/02 13:36:27 ---> GET http://example.com/
+2014/12/02 13:36:27 <--- 200 http://example.com/
+<!doctype html>
+...
+```
+
 Or set `loghttp.Transport` to `http.Client`'s `Transport` field.
 
 ```go
