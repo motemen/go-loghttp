@@ -12,8 +12,8 @@ type RoundTripper func(*http.Request) (*http.Response, error)
 // Transport implements http.RoundTripper. When set as Transport of http.Client, it executes HTTP requests with logging.
 // No field is mandatory.
 type Transport struct {
-	Transport   http.RoundTripper
-	DoAround func(req *http.Request, roundtrip RoundTripper) (*http.Response, error)
+	Transport http.RoundTripper
+	DoAround  func(req *http.Request, roundtrip RoundTripper) (*http.Response, error)
 }
 
 // THe default logging transport that wraps http.DefaultTransport.
