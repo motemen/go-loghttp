@@ -21,14 +21,6 @@ var DefaultTransport = &Transport{
 	Transport: http.DefaultTransport,
 }
 
-// Used if transport.LogRequest is not set.
-var DefaultLogRequest = func(req *http.Request) {
-}
-
-// Used if transport.LogResponse is not set.
-var DefaultLogResponse = func(resp *http.Response) {
-}
-
 var DefaultDoAround = func(req *http.Request, roundtrip RoundTripper) (*http.Response, error) {
 	start := time.Now()
 	log.Printf("---> %s %s", req.Method, req.URL)
