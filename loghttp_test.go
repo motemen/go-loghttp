@@ -1,11 +1,12 @@
 package loghttp
 
 import (
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestRoundTrip(t *testing.T) {
@@ -23,11 +24,14 @@ func TestRoundTrip(t *testing.T) {
 
 	client := &http.Client{
 		Transport: &Transport{
-			LogRequest: func(req *http.Request) {
+			DoAround: func(req *http.Request, roundtrip RoundTripper) (*http.Response, error) {
 				reqs = append(reqs, req)
-			},
-			LogResponse: func(resp *http.Response) {
+				resp, err := roundtrip(req)
+				if err != nil {
+					return resp, err
+				}
 				resps = append(resps, resp)
+				return resp, err
 			},
 		},
 	}
