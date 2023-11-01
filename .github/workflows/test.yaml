@@ -1,0 +1,37 @@
+name: test
+on:
+  pull_request:
+    branches:
+    - "**"
+  push:
+    branches:
+    - master
+jobs:
+  go-versions:
+    runs-on: ubuntu-latest
+    outputs:
+      versions: ${{ steps.versions.outputs.value }}
+    steps:
+      - id: versions
+        run: |
+          versions=$(curl -s 'https://go.dev/dl/?mode=json' | jq -c 'map(.version[2:])')
+          echo "value=${versions}" >> $GITHUB_OUTPUT
+  test:
+    needs: go-version
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+        - ubuntu-latest
+        - macOS-latest
+        go-version: ${{fromJson(needs.go-versions.outputs.versions)}}
+    steps:
+    - name: setup go
+      uses: actions/setup-go@v4
+      with:
+        go-version: ${{ matrix.go-version }}
+    - name: checkout
+      uses: actions/checkout@v3
+    - name: test
+      run: go test ./...

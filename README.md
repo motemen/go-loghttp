@@ -3,7 +3,7 @@ go-loghttp
 
 Log http.Client's requests and responses automatically.
 
-[GoDoc](http://godoc.org/github.com/motemen/go-loghttp)
+[PkgGoDev](https://pkg.go.dev/github.com/motemen/go-loghttp)
 
 ## Synopsis
 
