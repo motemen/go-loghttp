@@ -1,8 +1,9 @@
-package global
+package global_test
 
 import (
-	_ "github.com/motemen/go-loghttp/global"
 	"net/http"
+
+	_ "github.com/motemen/go-loghttp/global"
 )
 
 var client = &http.Client{}
