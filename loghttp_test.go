@@ -1,8 +1,6 @@
 package loghttp
 
 import (
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -33,15 +31,34 @@ func TestRoundTrip(t *testing.T) {
 	}
 
 	resp, err := client.Get(ts.URL)
-	require.NoError(t, err)
-	assert.Equal(t, resp.StatusCode, 200)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if resp.StatusCode != 200 {
+		t.Errorf("expected status code 200, got %d", resp.StatusCode)
+	}
 
-	require.Equal(t, len(reqs), 1)
-	require.Equal(t, len(resps), 1)
+	if len(reqs) != 1 {
+		t.Errorf("expected 1 request, got %d", len(reqs))
+	}
 
-	assert.Equal(t, reqs[0].URL.String(), ts.URL)
-	assert.Equal(t, reqs[0].Method, "GET")
+	if len(resps) != 1 {
+		t.Errorf("expected 1 response, got %d", len(resps))
+	}
 
-	assert.Equal(t, resps[0].StatusCode, 200)
-	assert.Equal(t, resps[0].Request.URL.String(), ts.URL)
+	if reqs[0].URL.String() != ts.URL {
+		t.Errorf("expected request URL %q, got %q", ts.URL, reqs[0].URL.String())
+	}
+
+	if reqs[0].Method != "GET" {
+		t.Errorf("expected request method GET, got %q", reqs[0].Method)
+	}
+
+	if resps[0].StatusCode != 200 {
+		t.Errorf("expected response status code 200, got %d", resps[0].StatusCode)
+	}
+
+	if resps[0].Request.URL.String() != ts.URL {
+		t.Errorf("expected response request URL %q, got %q", ts.URL, resps[0].Request.URL.String())
+	}
 }
