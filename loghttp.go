@@ -1,5 +1,3 @@
-// +build go1.7
-
 // Package loghttp provides automatic logging functionalities to http.Client.
 package loghttp
 
