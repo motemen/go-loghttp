@@ -85,3 +85,19 @@ func (t *Transport) transport() http.RoundTripper {
 
 	return http.DefaultTransport
 }
+
+func (t *Transport) CloseIdleConnections() {
+	if tr, ok := t.transport().(interface {
+		CloseIdleConnections()
+	}); ok {
+		tr.CloseIdleConnections()
+	}
+}
+
+func (t *Transport) CancelRequest(req *http.Request) {
+	if tr, ok := t.transport().(interface {
+		CancelRequest(*http.Request)
+	}); ok {
+		tr.CancelRequest(req)
+	}
+}
